@@ -1,6 +1,16 @@
 variable "aws_region" {
-description = "AWS region"
-default = "eu-west-3"
+  description = "AWS region"
+  default     = "eu-west-3"
+}
+
+variable "aws_instance_type" {
+  description = "AWS instance type"
+  default     = "t2.micro"
+}
+
+variable "aws_instance_ami" {
+  description = "AMI"
+  default     = "ami-0c95ddc49a2ac351f"
 }
 
 variable "own_ssh_key" {
@@ -12,4 +22,9 @@ variable "security_group_name" {
   description = "The name of my security group"
   type        = string
   default     = "terraform-my-aws"
+}
+
+variable "aws_web_site_name" {
+  description = "Web site name"
+  default     = "stackthecode.net"
 }

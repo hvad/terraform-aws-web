@@ -17,8 +17,8 @@ resource "aws_key_pair" "deployer" {
 }
 
 resource "aws_instance" "my_aws" {
-  ami                    = "ami-0c95ddc49a2ac351f"
-  instance_type          = "t2.micro"
+  ami                    = var.aws_instance_ami
+  instance_type          = var.aws_instance_type
   key_name               = aws_key_pair.deployer.id
   vpc_security_group_ids = [aws_security_group.instance.id]
 
@@ -32,9 +32,9 @@ resource "aws_instance" "my_aws" {
   sudo firewall-cmd --permanent --zone=public --add-service=https
   sudo firewall-cmd --reload
   sudo dnf install httpd mod_ssl -y
+  sudo cp -Rf /tmp/my_website.conf /etc/httpd/conf.d/${var.aws_web_site_name}.conf
   sudo systemctl enable httpd
   sudo systemctl start httpd
-  sudo cp -Rf /tmp/my_website.conf /etc/httpd/conf.d/my_website.conf
   EOF
 
   provisioner "file" {
