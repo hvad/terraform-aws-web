@@ -31,21 +31,28 @@ resource "aws_instance" "my_aws" {
   sudo firewall-cmd --permanent --zone=public --add-service=http
   sudo firewall-cmd --permanent --zone=public --add-service=https
   sudo firewall-cmd --reload
+  sudo dnf install dnf-automatic -y
+  sudo sed -i 's/upgrade_type = default/upgrade_type = security/g' /etc/dnf/automatic.conf 
+  sudo sed -i 's/apply_updates = no/apply_updates = yes/g' /etc/dnf/automatic.conf 
+  systemctl enable --now dnf-automatic.timer
   sudo dnf install httpd mod_ssl -y
-  sudo cp -Rf /tmp/my_website.conf /etc/httpd/conf.d/${var.aws_web_site_name}.conf
+  sudo cp -Rf /tmp/http.conf /etc/httpd/conf.d/${var.aws_web_site_name}.conf
+  sudo mkdir /var/www/html/stackthecode.net
+  sudo chown -Rf apache:apache /var/www/html/stackthecode.net
+  sudo echo "<html><body><h1>It works!</h1></body></html>" > /var/www/html/stackthecode.net/index.html
   sudo systemctl enable httpd
   sudo systemctl start httpd
   EOF
 
   provisioner "file" {
     source      = "http.conf"
-    destination = "/tmp/my_website.conf"
+    destination = "/tmp/http.conf"
 
     connection {
       type        = "ssh"
       user        = "ec2-user"
       host        = self.public_ip
-      private_key = file("/Users/davidhannequin/.ssh/ssh-terraform")
+      private_key = file(var.own_path_ssh_private_key)
       timeout     = "2m"
     }
   }
