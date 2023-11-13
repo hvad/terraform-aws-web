@@ -37,11 +37,17 @@ resource "aws_instance" "my_aws" {
   systemctl enable --now dnf-automatic.timer
   sudo dnf install httpd mod_ssl -y
   sudo cp -Rf /tmp/http.conf /etc/httpd/conf.d/${var.aws_web_site_name}.conf
-  sudo mkdir /var/www/html/stackthecode.net
-  sudo chown -Rf apache:apache /var/www/html/stackthecode.net
-  sudo echo "<html><body><h1>It works!</h1></body></html>" > /var/www/html/stackthecode.net/index.html
+  sudo sed -i 's/WEB_SITE_NAME/${var.aws_web_site_name}/g' /etc/httpd/conf.d/${var.aws_web_site_name}.conf
+  sudo mkdir /var/www/html/${var.aws_web_site_name}
+  sudo chown -Rf apache:apache /var/www/html/${var.aws_web_site_name}
+  sudo echo "<html><body><h1>It works!</h1></body></html>" > /var/www/html/${var.aws_web_site_name}/index.html
   sudo systemctl enable httpd
   sudo systemctl start httpd
+  sudo dnf install -y augeas-libs
+  sudo python3 -m venv /opt/certbot/
+  sudo /opt/certbot/bin/pip install --upgrade pip
+  sudo /opt/certbot/bin/pip install certbot certbot-apache
+  sudo ln -s /opt/certbot/bin/certbot /usr/bin/certbot
   EOF
 
   provisioner "file" {
