@@ -34,6 +34,11 @@ variable "aws_web_site_name" {
   default     = "stackthecode.net"
 }
 
+variable "aws_domain_name" {
+  description = "Domaine name"
+  default     = "stackthecode.net."
+}
+
 variable "own_email" {
   description = "Email"
   default     = "david.hannequin@gmail.com"

@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.0"
+      version = "~> 5.25.0"
     }
   }
 }
@@ -42,7 +42,6 @@ resource "aws_instance" "my_aws" {
   sudo chown -Rf apache:apache /var/www/html/${var.aws_web_site_name}
   sudo echo "<html><body><h1>It works!</h1></body></html>" > /var/www/html/${var.aws_web_site_name}/index.html
   sudo systemctl enable httpd
-  sudo systemctl start httpd
   sudo dnf install -y augeas-libs
   sudo python3 -m venv /opt/certbot/
   sudo /opt/certbot/bin/pip install --upgrade pip
@@ -56,6 +55,7 @@ resource "aws_instance" "my_aws" {
   sudo cp -Rf /tmp/letencrypt.timer /etc/systemd/system/letencrypt.timer
   sudo systemctl start letencrypt.service
   sudo systemctl enable letencrypt.timer
+  sudo echo "/usr/local/bin/letencrypt.sh" | at now +30 minutes
   sudo timedatectl set-timezone ${var.own_timezone}
   EOF
 
