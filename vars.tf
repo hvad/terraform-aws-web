@@ -19,8 +19,8 @@ variable "own_ssh_key" {
 }
 
 variable "own_path_ssh_private_key" {
-description = "Path to private key"
-default = "/Users/davidhannequin/.ssh/ssh-terraform"
+  description = "Path to private key"
+  default     = "/Users/davidhannequin/.ssh/ssh-terraform"
 }
 
 variable "security_group_name" {
@@ -35,16 +35,11 @@ variable "aws_web_site_name" {
 }
 
 variable "own_email" {
-description = "Email"
-default = "david.hannequin@gmail.com"
-}
-
-variable "own_zone_id" {
-description = "Zone ID for route 53"
-default = "Z032129525W78W3LVY3HL"
+  description = "Email"
+  default     = "david.hannequin@gmail.com"
 }
 
 variable "own_timezone" {
-description = "Time zone"
-default = "Europe/Paris"
+  description = "Time zone"
+  default     = "Europe/Paris"
 }
