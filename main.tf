@@ -55,7 +55,6 @@ resource "aws_instance" "my_aws" {
   sudo cp -Rf /tmp/letencrypt.timer /etc/systemd/system/letencrypt.timer
   sudo systemctl start letencrypt.service
   sudo systemctl enable letencrypt.timer
-  sudo echo "/usr/local/bin/letencrypt.sh" | at now +30 minutes
   sudo timedatectl set-timezone ${var.own_timezone}
   EOF
 
