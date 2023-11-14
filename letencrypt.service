@@ -1,0 +1,8 @@
+[Unit]                                                                                                                                                                                   
+Description=Update SSL Certificate                                                                                                                                                       
+Wants=letencrypt.timer
+                                                                                                                                                                                         
+[Service]                                                                                                                                                                                
+Type=simple                                                                                                                                                                              
+ExecStart=/usr/local/bin/letencrypt.sh
+StandardError=journal

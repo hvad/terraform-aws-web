@@ -33,3 +33,18 @@ variable "aws_web_site_name" {
   description = "Web site name"
   default     = "stackthecode.net"
 }
+
+variable "own_email" {
+description = "Email"
+default = "david.hannequin@gmail.com"
+}
+
+variable "own_zone_id" {
+description = "Zone ID for route 53"
+default = "Z032129525W78W3LVY3HL"
+}
+
+variable "own_timezone" {
+description = "Time zone"
+default = "Europe/Paris"
+}

@@ -48,11 +48,59 @@ resource "aws_instance" "my_aws" {
   sudo /opt/certbot/bin/pip install --upgrade pip
   sudo /opt/certbot/bin/pip install certbot certbot-apache
   sudo ln -s /opt/certbot/bin/certbot /usr/bin/certbot
+  sudo cp -Rf /tmp/letencrypt.sh /usr/local/bin/letencrypt.sh
+  sudo chmod a+x /usr/local/bin/letencrypt.sh
+  sudo sed -i 's/DOMAIN/${var.aws_web_site_name}/g' /usr/local/bin/letencrypt.sh
+  sudo sed -i 's/EMAIL/${var.own_email}/g' /usr/local/bin/letencrypt.sh
+  sudo cp -Rf /tmp/letencrypt.service /etc/systemd/system/letencrypt.service
+  sudo cp -Rf /tmp/letencrypt.timer /etc/systemd/system/letencrypt.timer
+  sudo systemctl start letencrypt.service
+  sudo systemctl enable letencrypt.timer
+  sudo timedatectl set-timezone ${var.own_timezone}
   EOF
 
   provisioner "file" {
     source      = "http.conf"
     destination = "/tmp/http.conf"
+
+    connection {
+      type        = "ssh"
+      user        = "ec2-user"
+      host        = self.public_ip
+      private_key = file(var.own_path_ssh_private_key)
+      timeout     = "2m"
+    }
+  }
+
+  provisioner "file" {
+    source      = "letencrypt.sh"
+    destination = "/tmp/letencrypt.sh"
+
+    connection {
+      type        = "ssh"
+      user        = "ec2-user"
+      host        = self.public_ip
+      private_key = file(var.own_path_ssh_private_key)
+      timeout     = "2m"
+    }
+  }
+
+  provisioner "file" {
+    source      = "letencrypt.service"
+    destination = "/tmp/letencrypt.service"
+
+    connection {
+      type        = "ssh"
+      user        = "ec2-user"
+      host        = self.public_ip
+      private_key = file(var.own_path_ssh_private_key)
+      timeout     = "2m"
+    }
+  }
+
+  provisioner "file" {
+    source      = "letencrypt.timer"
+    destination = "/tmp/letencrypt.timer"
 
     connection {
       type        = "ssh"
