@@ -9,6 +9,7 @@ record for domain name in existing zone and let's encrypt SSL certificate.
 
 Before execute plan you have to create tfvars file with variables below :
 
+```
 - aws_region = "<AWS region to deploy Web server>"
 
 - aws_instance_type = "<Size of instance>"
@@ -30,6 +31,7 @@ Warning : SSH private key with password are not support by terraform AWS provide
 - own_email = "<Email of contact for let encrypt SSL certificate>"
 
 - own_timezone = "<Time zone of AMI. On Linux Amazone 2023 it is not Paris>"
+```
 
 ## How to use 
 
