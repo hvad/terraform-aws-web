@@ -53,9 +53,9 @@ To destroy :
 $ terraform destroy
 ```
 
-## How to delete any resource added by terraform
+## How to delete any resources added by terraform
 
-List all state :
+List all states :
 
 ```
 $ terraform state list 
