@@ -20,8 +20,6 @@ Before execute plan you have to create tfvars file with variables below :
 
 - own_path_ssh_private_key = "<Path of SSH private key without password>" 
 
-Warning : SSH private key with password are not support by terraform AWS provider.
-
 - security_group_name =  "<Security group name>"
 
 - aws_web_site_name = "<Web site name>" 
@@ -32,6 +30,8 @@ Warning : SSH private key with password are not support by terraform AWS provide
 
 - own_timezone = "<Time zone of AMI. On Linux Amazone 2023 it is not Paris>"
 ```
+
+**Warning :** SSH private key with password are not support by terraform AWS provider.
 
 ## How to use 
 
