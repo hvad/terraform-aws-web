@@ -35,13 +35,13 @@ Before execute plan you have to create tfvars file with variables below :
 
 ## How to use 
 
-To check the plan :
+To check the plan with a file vars.tfvars :
 
 ```
 $ terraform plan -var-file="vars.tfvars"
 ```
 
-To deploy :
+To deploy with a file vars.tfvars :
 
 ```
 $ terraform apply -var-file="vars.tfvars"
